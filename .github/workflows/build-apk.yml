@@ -29,6 +29,8 @@ jobs:
 
       - name: Initialize project
         run: |
+          git config --global user.email "ci@videolan.org"
+          git config --global user.name "VLC CI"
           export ANDROID_SDK=$ANDROID_SDK_ROOT
           export ANDROID_NDK=$ANDROID_SDK_ROOT/ndk/28.2.13676358
           ./buildsystem/compile.sh --init -vlc4
