@@ -36,7 +36,13 @@ abstract public class Artist extends MediaLibraryItem {
         if (id == 1L) {
             mTitle = SpecialRes.UNKNOWN_ARTIST;
         } else if (id == 2L) {
-            mTitle = SpecialRes.VARIOUS_ARTISTS;
+            if (name != null && name.length() > 0
+                    && !name.equals(SpecialRes.VARIOUS_ARTISTS)
+                    && !name.equals(SpecialRes.UNKNOWN_ARTIST)) {
+                mTitle = name;
+            } else {
+                mTitle = SpecialRes.VARIOUS_ARTISTS;
+            }
         }
     }
 

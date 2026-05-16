@@ -100,9 +100,19 @@ public class MediaWrapperImpl extends MediaWrapper {
 
     public void setArtist(String artist) {
         mArtistName = artist;
+        mArtistNames = null;
     }
 
     public String getReferenceArtist() {
+        String[] artists = getArtists();
+        if (artists.length > 1) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < artists.length; i++) {
+                if (i > 0) sb.append(", ");
+                sb.append(artists[i]);
+            }
+            return sb.toString();
+        }
         return mAlbumArtistName == null ? mArtistName : mAlbumArtistName;
     }
 

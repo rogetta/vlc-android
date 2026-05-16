@@ -83,7 +83,11 @@ class CoverMediaSwitcher(context: Context, attrs: AttributeSet) : AudioMediaSwit
         }
 
         titleView.text = title
-        artistView.text = TextUtils.separatedString(artist, album)
+        val displayArtist = artist?.let {
+            val split = it.split(Regex("\\s*([;/]|\\bfeat\\.|\\bft\\.|\\bfeat\\b|\\bft\\b|\\bvs\\.|\\bx\\b)\\s*"))
+            if (split.size > 1) split.joinToString(", ") else it
+        }
+        artistView.text = TextUtils.separatedString(displayArtist, album)
         trackInfoView?.text = trackInfo
 
         setEllipsizeModeByPref(titleView, true)

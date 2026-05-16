@@ -529,7 +529,12 @@ class AudioPlayer : Fragment(), PlaylistAdapter.IPlayer, TextWatcher, IAudioPlay
         }
 
         binding.songTitle?.text = if (!chapter.isNullOrEmpty()) chapter else  playlistModel.title
-        binding.songSubtitle?.text = if (!chapter.isNullOrEmpty()) TextUtils.separatedString(playlistModel.title, playlistModel.artist) else TextUtils.separatedString(playlistModel.artist, playlistModel.album)
+        val displayArtist = playlistModel.currentMediaWrapper?.let { mw ->
+            mw.getArtists().let { artists ->
+                if (artists.size > 1) artists.joinToString(", ") else playlistModel.artist
+            }
+        } ?: playlistModel.artist
+        binding.songSubtitle?.text = if (!chapter.isNullOrEmpty()) TextUtils.separatedString(playlistModel.title, displayArtist) else TextUtils.separatedString(displayArtist, playlistModel.album)
         binding.songTitle?.isSelected = true
         binding.songSubtitle?.isSelected = true
         binding.songTrackInfo?.text = playlistModel.service?.trackInfo()

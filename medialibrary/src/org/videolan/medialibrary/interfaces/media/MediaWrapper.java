@@ -95,6 +95,7 @@ public abstract class MediaWrapper extends MediaLibraryItem implements Parcelabl
     protected long mArtistId;
     protected long mAlbumArtistId;
     protected String mArtistName;
+    protected String[] mArtistNames;
     protected String mGenre;
     protected String mCopyright;
     protected long mAlbumId;
@@ -155,6 +156,25 @@ public abstract class MediaWrapper extends MediaLibraryItem implements Parcelabl
     public abstract Album getAlbum();
     public abstract Artist getArtist();
     public abstract Artist getAlbumArtist();
+
+    /**
+     * 返回所有 artist 名称。如果 artist 标签包含多作者分隔符
+     * (; / feat. ft. &amp; , vs. x)，自动拆分为多个。
+     */
+    public String[] getArtists() {
+        if (mArtistNames != null) return mArtistNames;
+        mArtistNames = splitArtists(mArtistName);
+        return mArtistNames;
+    }
+
+    public String[] getArtistNames() {
+        return getArtists();
+    }
+
+    private static String[] splitArtists(String raw) {
+        if (raw == null || raw.isEmpty()) return new String[0];
+        return raw.split("\\s*([;/]|\\bfeat\\.|\\bft\\.|\\bfeat\\b|\\bft\\b|\\bvs\\.|\\bx\\b)\\s*");
+    }
 
     /**
      * Create a new MediaWrapper

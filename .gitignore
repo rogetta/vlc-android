@@ -77,3 +77,10 @@ libvlc.pc.backup
 libvlcpp.pc
 lib/
 /buildsystem/automation/certificates/
+
+# IDE
+.vscode/
+
+# DeepSeek TUI
+.deepseek/
+.deepseek.toml
